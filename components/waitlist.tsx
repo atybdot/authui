@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { useForm, useStore } from "@tanstack/react-form";
 import { toast } from "sonner";
 import z from "zod";
-import { UserCookieData } from "@/lib/cookies";
+import type { UserSelect } from "@/lib/db-helpers";
 import EmailPending from "./cards/email-pending";
 import EmailVerified from "./cards/email-verified";
 import { ClockCountdownIcon, CheckCircleIcon } from "@phosphor-icons/react/dist/ssr";
@@ -17,10 +17,18 @@ const waitlistSchema = z.object({
   email: z.email("Please enter a valid email address"),
 });
 
-function WaitlistContent({ userData }: { userData: UserCookieData | null }) {
+function getUserStatus(user: UserSelect | null): "idle" | "pending" | "verified" {
+  if (!user) return "idle";
+  if (user.verifiedAt) return "verified";
+  if (user.token && new Date(user.tokenExpiresAt).getTime() > Date.now()) return "pending";
+  return "idle";
+}
+
+function WaitlistContent({ user }: { user: UserSelect | null }) {
+  const status = getUserStatus(user);
   const form = useForm({
     defaultValues: {
-      email: userData?.email ?? "",
+      email: user?.email ?? "",
     },
     validators: {
       onSubmit: waitlistSchema,
@@ -42,7 +50,7 @@ function WaitlistContent({ userData }: { userData: UserCookieData | null }) {
   });
 
   const _ = useStore(form.store);
-  const disabled = form.state.isSubmitting || (userData?.status && userData.status !== "idle");
+  const disabled = form.state.isSubmitting || status !== "idle";
 
   return (
     <section className="max-w-sm my-8 mx-auto px-4 ms:px-0">
@@ -82,16 +90,16 @@ function WaitlistContent({ userData }: { userData: UserCookieData | null }) {
                     form="waitlist-form"
                     disabled={disabled}
                     size={"sm"}
-                    data-status={userData?.status ?? "idle"}
+                    data-status={status}
                     className={
                       "rounded-md md:min-w-24 data-disabled:cursor-not-allowed dark:data-[status='verified']:bg-green-400 data-[status='verified']:bg-green-600 data-[status='pending']:bg-yellow-500 data-[status='pending']:text-yellow-950"
                     }
                   >
-                    {userData?.status === "verified" ? (
+                    {status === "verified" ? (
                       <>
                         <CheckCircleIcon /> verified
                       </>
-                    ) : userData?.status === "pending" ? (
+                    ) : status === "pending" ? (
                       <>
                         <ClockCountdownIcon /> pending
                       </>
@@ -108,17 +116,12 @@ function WaitlistContent({ userData }: { userData: UserCookieData | null }) {
             }}
           />
         </form>
-        {/* Status Cards */}
         <div className="mt-4">
-          {userData?.status === "pending" && (
-            <EmailPending
-              email={userData.email}
-              time={userData.sentAt}
-              expiresAt={userData.expiresAt}
-            />
+          {status === "pending" && user!.mailSentAt && (
+            <EmailPending email={user!.email} time={user!.mailSentAt} />
           )}
-          {userData?.status === "verified" && (
-            <EmailVerified email={userData.email} time={userData.sentAt} />
+          {status === "verified" && user!.verifiedAt && (
+            <EmailVerified email={user!.email} verifiedAt={user!.verifiedAt} />
           )}
         </div>
       </>
@@ -126,6 +129,6 @@ function WaitlistContent({ userData }: { userData: UserCookieData | null }) {
   );
 }
 
-export default function WaitlistComponent({ userData }: { userData: UserCookieData | null }) {
-  return <WaitlistContent userData={userData} />;
+export default function WaitlistComponent({ user }: { user: UserSelect | null }) {
+  return <WaitlistContent user={user} />;
 }

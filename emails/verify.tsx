@@ -1,4 +1,3 @@
-import { formatTokenExpiry } from "@/lib/utils";
 import {
   Body,
   Button,
@@ -14,7 +13,7 @@ import {
 } from "@react-email/components";
 const baseURL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
 
-export const VerifyEmail = ({ href, expiresAt }: { href: string; expiresAt: number | Date }) => {
+export const VerifyEmail = ({ href }: { href: string }) => {
   return (
     <Html>
       <Tailwind
@@ -23,16 +22,16 @@ export const VerifyEmail = ({ href, expiresAt }: { href: string; expiresAt: numb
         }}
       >
         <Head />
-        <Body className="mx-auto my-auto dark:bg-black bg-white font-sans py-12 max-w-xs h-full px-6 **:cursor-default">
+        <Body className="mx-auto my-auto bg-zinc-50! text-zinc-950 font-sans py-12 max-w-xs h-full px-6 **:cursor-default">
           <Section className="flex flex-col items-start justify-start mb-6 text-2xl font-semibold text-foreground tracking-tight text-start">
-            auth<span className="text-zinc-400 dark:text-zinc-600 ">UI</span>
+            auth<span className="text-zinc-400">UI</span>
           </Section>
           <Heading className="text-start font-sans font-medium">Confirm Your Email</Heading>
           <Text>
             Thank you for Showing interest in{" "}
             <span className="font-semibold text-md">
               auth
-              <span className="text-zinc-400 dark:text-zinc-600">UI</span>
+              <span className="text-zinc-400 ">UI</span>
             </span>
             .
             <br />
@@ -51,26 +50,22 @@ export const VerifyEmail = ({ href, expiresAt }: { href: string; expiresAt: numb
             {href}
           </Text>
           <Text className="mt-8 text-xs text-zinc-800/40 text-balance leading-relaxed">
-            This email will expire in 60 minutes, approximately at{" "}
-            <span className="underline underline-offset-2 text-zinc-800/50">
-              {formatTokenExpiry(expiresAt)}
-            </span>
-            .
+            This email will expire in 60 minutes.
             <br />
             If you did not request this email, please ignore it.
           </Text>
           <Section className="mt-8">
-            <div className="text-3xl font-semibold text-foreground tracking-tighter text-center -mb-2 mt-12">
-              auth<span className="text-zinc-400 dark:text-zinc-600 ">UI</span>
+            <div className="text-3xl font-semibold text-foreground tracking-tighter text-center -mb-2! mt-12">
+              auth<span className="text-zinc-400">UI</span>
             </div>
             <p className="text-xs text-balance text-center mx-auto text-zinc-500">
               customizable auth components
             </p>
             <div>
-              <p className="text-zinc-400 dark:text-zinc-600 text-xs text-center mx-auto -mt-2">
+              <p className="text-zinc-400  text-xs text-center mx-auto -mt-2!">
                 &copy; {new Date().getFullYear()}{" "}
                 <span className="font-medium text-md text-zinc-600">
-                  auth<span className="text-zinc-400 dark:text-zinc-600">UI</span>
+                  auth<span className="text-zinc-400">UI</span>
                 </span>
                 . All rights reserved.
               </p>
@@ -78,38 +73,38 @@ export const VerifyEmail = ({ href, expiresAt }: { href: string; expiresAt: numb
             <div className="flex items-center justify-center gap-4 text-xs">
               <Link
                 href="https://authui.atyb.me"
-                className="text-zinc-400 dark:text-zinc-600 rounded-full p-1 flex items-center justify-center border-zinc-300"
+                className="text-zinc-400  rounded-full p-1 flex items-center justify-center border-zinc-300"
               >
                 <Img
                   height={16}
                   width={16}
                   alt="logo"
                   src={`${baseURL}/icons/PhGlobeSimple.png`}
-                  className="size-4 opacity-40"
+                  className="size-4 opacity-70"
                 />
               </Link>
               <Link
                 href="https://github.com/atybdot/authui"
-                className="text-zinc-400 dark:text-zinc-600 rounded-full p-1 flex items-center justify-center border-zinc-300"
+                className="text-zinc-400  rounded-full p-1 flex items-center justify-center border-zinc-300"
               >
                 <Img
                   height={16}
                   width={16}
                   alt="logo"
                   src={`${baseURL}/icons/PhGithubLogo.png`}
-                  className="size-4 opacity-40"
+                  className="size-4 opacity-70"
                 />
               </Link>
               <Link
                 href="https://x.com/atybdot"
-                className="text-zinc-400 dark:text-zinc-600 rounded-full p-1 flex items-center justify-center border-zinc-300"
+                className="text-zinc-400  rounded-full p-1 flex items-center justify-center border-zinc-300"
               >
                 <Img
                   height={16}
                   width={16}
                   alt="logo"
                   src={`${baseURL}/icons/PhXLogo.png`}
-                  className="size-4 opacity-40"
+                  className="size-4 opacity-70"
                 />
               </Link>
             </div>

@@ -17,7 +17,6 @@ function Footer() {
           <GlobeSimpleIcon />
         </Link>
         <Link target="_blank" href={"https://github.com/atybdot"} className="text-muted-foreground">
-          {/* <GithubLogoIcon /> */}
           <MdiGithub />
         </Link>
         <Link target="_blank" href={"https://x.com/atybdot"} className="text-muted-foreground">

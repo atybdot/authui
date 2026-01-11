@@ -1,53 +1,25 @@
 "use server";
-
 import { cookies } from "next/headers";
-import { COOKIE_NAMES, COOKIE_OPTIONS, type UserStatus, type UserCookieData } from "@/lib/cookies";
+import { findUserByEmail, type UserSelect } from "@/lib/db-helpers";
+import { COOKIE_NAME, COOKIE_OPTIONS } from "@/lib/cookies";
 
-export async function setUserCookies(
-  data: Omit<UserCookieData, "sentAt" | "expiresAt"> & { expiresAt: Date; sentAt: Date },
-): Promise<void> {
+export async function getUserEmail(): Promise<string | null> {
   const cookieStore = await cookies();
-
-  cookieStore.set(COOKIE_NAMES.USER_EMAIL, data.email, COOKIE_OPTIONS);
-  cookieStore.set(COOKIE_NAMES.USER_STATUS, data.status, COOKIE_OPTIONS);
-  cookieStore.set(COOKIE_NAMES.SENT_AT, data.sentAt.toISOString(), COOKIE_OPTIONS);
-  cookieStore.set(COOKIE_NAMES.EXPIRES_AT, data.expiresAt.toISOString(), COOKIE_OPTIONS);
+  return cookieStore.get(COOKIE_NAME)?.value ?? null;
 }
 
-export async function updateUserStatus(status: UserStatus): Promise<void> {
+export async function setUserEmail(email: string): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAMES.USER_STATUS, status, COOKIE_OPTIONS);
+  cookieStore.set(COOKIE_NAME, email, COOKIE_OPTIONS);
 }
 
-export async function clearUserCookies(): Promise<void> {
+export async function clearUserEmail(): Promise<void> {
   const cookieStore = await cookies();
-
-  cookieStore.delete(COOKIE_NAMES.USER_EMAIL);
-  cookieStore.delete(COOKIE_NAMES.USER_STATUS);
-  cookieStore.delete(COOKIE_NAMES.SENT_AT);
-  cookieStore.delete(COOKIE_NAMES.EXPIRES_AT);
+  cookieStore.delete(COOKIE_NAME);
 }
 
-export async function getUserCookies(): Promise<UserCookieData | null> {
-  const cookieStore = await cookies();
-
-  const email = cookieStore.get(COOKIE_NAMES.USER_EMAIL)?.value;
-  const status = cookieStore.get(COOKIE_NAMES.USER_STATUS)?.value as UserStatus | undefined;
-  const sentAt = cookieStore.get(COOKIE_NAMES.SENT_AT)?.value;
-  const expiresAt = cookieStore.get(COOKIE_NAMES.EXPIRES_AT)?.value;
-
-  if (!email || !status || !sentAt || !expiresAt) {
-    return null;
-  }
-
-  return { email, status, sentAt, expiresAt };
-}
-
-export async function isCookieExpired(): Promise<boolean> {
-  const cookieStore = await cookies();
-  const expiresAt = cookieStore.get(COOKIE_NAMES.EXPIRES_AT)?.value;
-
-  if (!expiresAt) return true;
-
-  return new Date(expiresAt).getTime() < Date.now();
+export async function getUserFromDb(): Promise<UserSelect | null> {
+  const email = await getUserEmail();
+  if (!email) return null;
+  return findUserByEmail(email);
 }

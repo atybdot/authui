@@ -1,10 +1,10 @@
 import Waitlist from "@/components/waitlist";
-import { getUserCookies } from "@/actions/cookies";
+import { getUserFromDb } from "@/actions/cookies";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import Logo from "@/components/Logo";
 
 export default async function Home() {
-  const userData = await getUserCookies();
+  const userData = await getUserFromDb();
 
   return (
     <section className="container mx-auto max-w-3xl px-4 py-8 **:cursor-default">
@@ -15,7 +15,7 @@ export default async function Home() {
         <Logo className="text-6xl md:text-8xl" />
         <h3 className="text-md md:text-[24px] text-center">customizable auth components</h3>
       </div>
-      <Waitlist userData={userData} />
+      <Waitlist user={userData} />
     </section>
   );
 }

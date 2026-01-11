@@ -1,11 +1,11 @@
 "use client";
 import { Button } from "../ui/button";
-import { clearUserCookies } from "@/actions/cookies";
+import { clearUserEmail } from "@/actions/cookies";
 export function ChangeEmail() {
   return (
     <Button
       onClick={async () => {
-        clearUserCookies();
+        clearUserEmail();
       }}
       variant={"link"}
       className={

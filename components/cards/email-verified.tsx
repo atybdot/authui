@@ -2,8 +2,8 @@ import { useRelativeTime } from "@/hooks/use-relative-time";
 import { Card, CardContent } from "../ui/card";
 import { ChangeEmail } from "./change-email";
 
-function EmailVerified({ email, time }: { email: string; time?: string }) {
-  const [relT] = useRelativeTime(time ?? new Date().toISOString());
+function EmailVerified({ email, verifiedAt }: { email: string; verifiedAt: Date }) {
+  const [relT] = useRelativeTime(verifiedAt.toISOString());
   return (
     <div className="p-1 rounded-xl my-4 border border-teal-500/20 bg-green-500/10">
       <Card className="rounded-lg border-0 ring-green-500/20 bg-green-500/10 pb-2">
@@ -19,7 +19,7 @@ function EmailVerified({ email, time }: { email: string; time?: string }) {
             {email}
           </code>
           <div className="flex items-center justify-between text-muted-foreground uppercase text-[10px] font-mono ">
-            <span>verified {time !== undefined && relT}</span>
+            <span>verified {relT}</span>
           </div>
           <ChangeEmail />
         </CardContent>
