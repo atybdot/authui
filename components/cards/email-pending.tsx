@@ -3,16 +3,8 @@ import { Card, CardContent } from "../ui/card";
 import { ChangeEmail } from "./change-email";
 import { useRelativeTime } from "@/hooks/use-relative-time";
 
-function EmailPending({
-  email,
-  time,
-  expiresAt,
-}: {
-  email: string;
-  time?: string;
-  expiresAt: string;
-}) {
-  const [relT] = useRelativeTime(time ?? new Date().toISOString());
+function EmailPending({ email, time }: { email: string; time: Date }) {
+  const [relT] = useRelativeTime(time.toISOString());
   return (
     <div className="p-1 rounded-xl my-4 border border-yellow-500/20 bg-yellow-500/10 ">
       <Card className="rounded-lg border-0 ring-yellow-500/20 bg-yellow-500/10 pb-2">
@@ -29,8 +21,7 @@ function EmailPending({
             {email}
           </code>
           <div className="text-muted-foreground uppercase text-[10px] font-mono flex items-center justify-between  ">
-            <span>sent {time !== undefined && relT}</span>
-            <span>expires {expiresAt}</span>
+            <span>sent {relT}</span>
           </div>
           <ChangeEmail />
         </CardContent>

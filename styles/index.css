@@ -135,7 +135,6 @@
   --color-color-1: var(--color-1);
 
   @keyframes shiny-text {
-
     0%,
     90%,
     100% {

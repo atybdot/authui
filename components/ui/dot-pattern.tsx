@@ -88,6 +88,7 @@ export function DotPattern({
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
+      ctx.imageSmoothingEnabled = false;
       ctx.scale(dpr, dpr);
 
       const cols = Math.ceil(containerWidth / width);
@@ -105,8 +106,8 @@ export function DotPattern({
           const col = i % cols;
           const row = Math.floor(i / cols);
           dots.push({
-            x: col * width + cx,
-            y: row * height + cy,
+            x: Math.floor(col * width + cx),
+            y: Math.floor(row * height + cy),
             delay: Math.random() * 5,
             duration: Math.random() * 3 + 2,
             phase: Math.random() * Math.PI * 2,
@@ -157,7 +158,7 @@ export function DotPattern({
       className={cn("pointer-events-none absolute inset-0 h-full w-full", className)}
       {...props}
     >
-      <canvas ref={canvasRef} aria-hidden="true" style={{ imageRendering: "pixelated" }} />
+      <canvas ref={canvasRef} aria-hidden="true" />
     </div>
   );
 }

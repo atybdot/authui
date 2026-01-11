@@ -5,7 +5,7 @@ import { TOKEN_EXPIRY_S } from "@/lib/utils";
 export const users = sqliteTable(
   "users",
   {
-    id: int().primaryKey({ autoIncrement: true }),
+    id: text().primaryKey().default(sql`(uuid7())`),
     email: text().notNull().unique(),
     verifiedAt: int({ mode: "timestamp" }),
     createdAt: int({ mode: "timestamp" }).notNull().default(sql`(unixepoch())`),

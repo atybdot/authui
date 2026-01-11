@@ -11,7 +11,7 @@ export function validateInput(data: UserData): Result<null> {
   const result = inputSchema.safeParse(data);
 
   if (!result.success) {
-    const errors = result.error.format();
+    const errors = z.treeifyError(result.error).errors;
     console.error("[ERROR VALIDATING INPUT DATA]", errors);
     return { data: null, error: Object.values(errors).flat().join(", "), status: 400 };
   }
