@@ -1,0 +1,11 @@
+# robots.txt for authui
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://authui.dev/sitemap.xml
+
+# Disallow private/admin paths (if any)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /verify/

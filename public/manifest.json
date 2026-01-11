@@ -1,0 +1,9 @@
+{
+  "name": "authui",
+  "short_name": "authui",
+  "description": "Beautiful, customizable authentication UI components for modern web applications",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
