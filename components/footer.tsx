@@ -4,15 +4,19 @@ import { MdiGithub } from "./icons/github";
 
 function Footer() {
   return (
-    <footer className="py-2 pb-3 px-4 md:px-12 md:pb-4 flex items-center justify-between gap-1 font-semibold text-xs tracking-wide text-muted-foreground/50">
+    <footer className="px-6 md:px-12 pb-8 flex items-center justify-between gap-1 font-semibold text-sm tracking-wide text-muted-foreground/50 ">
       <div>
         created by
-        <Link target="_blank" href={"https://atyb.me"} className="text-muted-foreground">
+        <Link
+          target="_blank"
+          href={"https://atyb.me"}
+          className="text-muted-foreground hover:text-foreground transition-all duration-200 ease-in-out"
+        >
           {" "}
           atyb
         </Link>
       </div>
-      <div className="space-x-4 flex items-center justify-center">
+      <div className="space-x-4 flex items-center justify-centerd **:hover:text-foreground **:transition-all **:duration-200 **:ease-in-out">
         <Link target="_blank" href={"https://atyb.me"} className="text-muted-foreground">
           <GlobeSimpleIcon />
         </Link>
