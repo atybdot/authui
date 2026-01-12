@@ -45,6 +45,7 @@ function WaitlistContent({ user }: { user: UserSelect | null }) {
         toast.error(result.error, { id: loadingToast });
       } else {
         toast.success("Check your email for verification!", { id: loadingToast });
+        form.reset();
       }
     },
   });
