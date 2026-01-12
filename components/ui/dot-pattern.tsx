@@ -74,7 +74,6 @@ export function DotPattern({
 
     let animationId: number;
     let dots: Array<{ x: number; y: number; delay: number; duration: number; phase: number }> = [];
-    let colorCache;
 
     const render = () => {
       const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
@@ -97,7 +96,6 @@ export function DotPattern({
       const mutedFg =
         getComputedStyle(container).getPropertyValue("--muted-foreground").trim() ||
         getComputedStyle(document.documentElement).getPropertyValue("--muted-foreground").trim();
-      colorCache = mutedFg;
       const rgb = parseOklchToRgb(mutedFg) || { r: 115, g: 115, b: 115 };
 
       if (dots.length !== cols * rows) {
