@@ -12,7 +12,7 @@ export async function sendVerificationEmail(
   const verifyUrl = `${env.NEXT_PUBLIC_APP_URL}/verify?token=${encodeURIComponent(token)}&email=${encodeURIComponent(email)}`;
 
   const { error } = await resend.emails.send({
-    from: "AuthUI <waitlist@authui.atyb.me>",
+    from: "AuthUI Waitlist <waitlist@authui.atyb.me>",
     to: email,
     subject: "Verify your AuthUI waitlist signup",
     react: VerifyEmail({ href: verifyUrl }),
