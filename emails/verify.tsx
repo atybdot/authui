@@ -70,7 +70,10 @@ export const VerifyEmail = ({ href }: { href: string }) => {
                 . All rights reserved.
               </p>
             </div>
-            <div className="flex items-center justify-center gap-4 text-xs">
+            <div
+              className="flex! items-center! justify-center! gap-4 text-xs w-fit mx-auto"
+              style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            >
               <Link
                 href="https://authui.atyb.me"
                 className="text-zinc-400  rounded-full p-1 flex items-center justify-center border-zinc-300"
